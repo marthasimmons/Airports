@@ -1,21 +1,25 @@
 class Airport {
+    static airports = []
     constructor ({name}) {
         this.name = name
         this.planes = []
+        Airport.airports.push(this)
+        
     }
 
     land(plane) {
         this.planes.push(plane)
+        plane.currentAirport = this
     }
 
     takeOff(plane) {
-        var x
-        for (x = 0; x < this.planes.length; x++) {
-            if (this.planes[x] == plane) {
-                this.planes.splice(x,1)
-            }
+        const x = this.planes.indexOf(plane)
+        this.planes.splice(x,1)
+        
+        const destination = plane.destinationAirport 
+        destination.land(plane)
         }
     }
-}
+
 
 module.exports = Airport 
